@@ -9,9 +9,12 @@ import android.content.Intent;
  */
 
 public class MyReceiver extends BroadcastReceiver {
+    int eggCountReceiver;
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent myIntent = new Intent(context,MyService.class);
+        intent.getIntExtra("@string/code", eggCountReceiver);
+
         context.startService(myIntent);
     }
 }
