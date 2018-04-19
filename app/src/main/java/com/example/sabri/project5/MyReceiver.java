@@ -37,7 +37,7 @@ public class MyReceiver extends BroadcastReceiver {
                 //notification with @string/gruel
             }
         }
-        
+
         context.startService(myIntent);
     }
 }
