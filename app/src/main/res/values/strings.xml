@@ -10,5 +10,6 @@
 
     <string name="current_egg_count_string">Current Egg Count</string>
     <string name="code">code</string>
+    <string name="eggData">eggData</string>
 
 </resources>

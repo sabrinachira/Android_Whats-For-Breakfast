@@ -1,16 +1,21 @@
 package com.example.sabri.project5;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static SharedPreferences pref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //creates xml file where data will be saved(I think)
+        //eggData is the key we can use to call later
+        pref = getSharedPreferences(getString(R.string.eggData), Context.MODE_PRIVATE);
     }
 
     /*
@@ -21,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void add_one_egg(View view) {
         Intent myIntent = new Intent();
-        sendBroadcast(myIntent.putExtra("@string/code", 1));
+        sendBroadcast(myIntent.putExtra(getString(R.string.code), 1));
         //post notification that an egg was added
         //@string/one_eggs_added
     }
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void add_two_egg(View view) {
         Intent myIntent = new Intent();
-        sendBroadcast(myIntent.putExtra("@string/code", 2));
+        sendBroadcast(myIntent.putExtra(getString(R.string.code), 2));
         //post notification that 2 eggs was added
         //@string/two_eggs_added
 
@@ -45,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
  */
     public void subtract_one_egg(View view) {
             Intent myIntent = new Intent();
-            sendBroadcast(myIntent.putExtra("@string/code", -1));
+            sendBroadcast(myIntent.putExtra(getString(R.string.code), -1));
             // @string/no_eggs
     }
 /*
@@ -58,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
  */
     public void make_breakfast(View view) {
             Intent myIntent = new Intent();
-            sendBroadcast(myIntent.putExtra("@string/code", 6));
+            sendBroadcast(myIntent.putExtra(getString(R.string.code), Constants.MAKE_BREAKFAST));
             //post a notification: "We are having gruel,
             //we are having x eggs available."
             //@string/gruel
