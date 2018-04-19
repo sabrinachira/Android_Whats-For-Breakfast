@@ -3,9 +3,6 @@ package com.example.sabri.project5;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by Dillon Sykes and Sabrina Chira on 4/16/2018.
