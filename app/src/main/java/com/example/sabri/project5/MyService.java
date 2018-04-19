@@ -17,67 +17,87 @@ public class MyService extends Service {
     SharedPreferences.Editor editor;
     int eggRec;
     int eCount;
+    String notification;
+    int notification_number = 1;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        intent.getIntExtra(getString(R.string.code),eggRec);
+        System.out.println("original eCount: " + eCount);
+        eggRec = intent.getIntExtra("code", Constants.DEFAULT_RECEIVER);
+        System.out.println("eggRec: " + eggRec);
+
         //editor used to change what is inside our pref storage area
         //get reference from MainActivity(not sure if this is right)
         prefFromMain = MainActivity.pref;
         //used to edit the preference
         editor = prefFromMain.edit();
         //gets data from xml storage if nothing is there defult is 0
-        eCount = prefFromMain.getInt(getString(R.string.eggData),0);
-        processEggData();
-        //not yet implemented
-        doNoti();
+        eCount = prefFromMain.getInt(getString(R.string.eggData), 0);
+        notification = processEggData();
+        System.out.println("after adding eCount: " + eCount);
+        doNoti(notification);
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void processEggData() {
-        if(eggRec == 1){
-            eCount +=1;
+    private String processEggData() {
+        if (eggRec == 1) {
+            eCount += 1;
             //updates the storage location with the new number of eggs
-            editor.putInt(getString(R.string.eggData),eCount).commit();
-            //notification with @string/one_egg_added
-        }else if(eggRec == 2){
-            eCount +=2;
-            editor.putInt(getString(R.string.eggData),eCount).commit();
-            //notification with @string/two_eggs_added
-        }else if(eggRec == -1) {
-            if(eCount == 0){
-                //notification with @string/no_eggs
-            }else{
-                eCount -=1;
-                editor.putInt(getString(R.string.eggData),eCount).commit();
-                //notification with @string/subtract
+            editor.putInt(getString(R.string.eggData), eCount).commit();
+            if (eCount == 1)
+                return getString(R.string.one_egg_added) + " " + eCount + " " + getString(R.string.egg_available);
+            else
+                return getString(R.string.one_egg_added) + " " + eCount + " " + getString(R.string.eggs_available);
+        } else if (eggRec == 2) {
+            eCount += 2;
+            editor.putInt(getString(R.string.eggData), eCount).commit();
+            return getString(R.string.two_eggs_added) + " " + eCount + " " + getString(R.string.eggs_available);
+        } else if (eggRec == -1) {
+            if (eCount == 0) {
+                return getString(R.string.no_eggs);
+            } else {
+                eCount -= 1;
+                editor.putInt(getString(R.string.eggData), eCount).commit();
+                if (eCount == 1)
+                    return getString(R.string.subtract) + " " + eCount + " " + getString(R.string.egg_available);
+                else
+                    return getString(R.string.subtract) + " " + eCount + " " + getString(R.string.eggs_available);
             }
-        }else if(eggRec == Constants.MAKE_BREAKFAST) {
+        } else if (eggRec == Constants.MAKE_BREAKFAST) {
             if (eCount >= 6) {
                 eCount -= 6;
-                //notification with @string/make_breakfast
+                editor.putInt(getString(R.string.eggData), eCount).commit();
+                if (eCount == 1)
+                    return getString(R.string.make_breakfast) + " " + eCount + " " + getString(R.string.egg_available);
+                else
+                    return getString(R.string.make_breakfast) + " " + eCount + " " + getString(R.string.eggs_available);
+
             } else {
-                //notification with @string/gruel
+                if (eCount == 1)
+                    return getString(R.string.gruel) + " " + eCount + " " + getString(R.string.egg_available);
+                else
+                    return getString(R.string.gruel) + " " + eCount + " " + getString(R.string.eggs_available);
             }
         }
+        return "Nothing: " + eggRec;
     }
 
 
-    private void doNoti() {
+    private void doNoti(String string) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
         Notification noti = new Notification.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText("Just a Notice")
+                .setContentText(string)
                 .setSmallIcon(R.mipmap.breakfast_logo)
-                .setOngoing(false)						//true only dismissable by app
-                .setProgress(100,10,true )				//show a progress bar
+                .setOngoing(false)                        //true only dismissable by app
                 .build();
-
-        // Hide the notification after its selected
-        //noti.flags |= Notification.FLAG_AUTO_CANCEL;
-
-        notificationManager.notify(1, noti);
+        notificationManager.notify(notification_number, noti);
+        //need to have a new notification_number, which is the id,
+        //otherwise it updates the current notification and the notification bar
+        //only has 1 notification at a time from the app.
+        notification_number++;
     }
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;

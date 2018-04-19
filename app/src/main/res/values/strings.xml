@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">Project5: Breakfast</string>
 
-    <string name="gruel">We are having gruel, we are having x eggs available."</string>
-    <string name="make_breakfast">We are having omelets, we are having x eggs available.</string>
+    <string name="gruel">We are having gruel. Gross. We now have</string>
+    <string name="eggs_available">eggs available."</string>
+    <string name="egg_available">egg available."</string>
+
+    <string name="make_breakfast">We are having omelets! YUM! We now have</string>
     <string name="no_eggs">We have no eggs.</string>
     <string name="subtract">1 egg subtracted.</string>
     <string name="one_egg_added">1 egg added.</string>
-    <string name="two_eggs_added">2 egg added.</string>
+    <string name="two_eggs_added">2 eggs added.</string>
 
     <string name="current_egg_count_string">Current Egg Count</string>
     <string name="code">code</string>

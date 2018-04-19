@@ -25,10 +25,8 @@ public class MainActivity extends AppCompatActivity {
      * One notification will appear per button click
      */
     public void add_one_egg(View view) {
-        Intent myIntent = new Intent();
+        Intent myIntent = new Intent(getApplicationContext(),MyReceiver.class);
         sendBroadcast(myIntent.putExtra(getString(R.string.code), 1));
-        //post notification that an egg was added
-        //@string/one_eggs_added
     }
 
     /*
@@ -38,20 +36,16 @@ public class MainActivity extends AppCompatActivity {
      * ONe notification will appear per button click
      */
     public void add_two_egg(View view) {
-        Intent myIntent = new Intent();
+        Intent myIntent = new Intent(getApplicationContext(),MyReceiver.class);
         sendBroadcast(myIntent.putExtra(getString(R.string.code), 2));
-        //post notification that 2 eggs was added
-        //@string/two_eggs_added
-
     }
 /*
  * subtract 1 egg from the current_egg_count.
  * the number of eggs cannot go negative
  */
     public void subtract_one_egg(View view) {
-            Intent myIntent = new Intent();
+            Intent myIntent = new Intent(getApplicationContext(),MyReceiver.class);
             sendBroadcast(myIntent.putExtra(getString(R.string.code), -1));
-            // @string/no_eggs
     }
 /*
  * If 6 or more eggs available, it will subtract 6 from the total,
@@ -62,10 +56,7 @@ public class MainActivity extends AppCompatActivity {
  * "We are having gruel, we have x eggs available."
  */
     public void make_breakfast(View view) {
-            Intent myIntent = new Intent();
+            Intent myIntent = new Intent(getApplicationContext(),MyReceiver.class);
             sendBroadcast(myIntent.putExtra(getString(R.string.code), Constants.MAKE_BREAKFAST));
-            //post a notification: "We are having gruel,
-            //we are having x eggs available."
-            //@string/gruel
     }
 }
