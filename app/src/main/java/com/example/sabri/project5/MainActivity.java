@@ -7,8 +7,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+/**
+ * Created by Dillon Sykes (50%) and Sabrina Chira (50%) on 4/16/2018.
+ */
+/*
+ * MainActivity creates MyReceiver intents based on which button was pressed.
+ * When a button is pressed, it sends a broadcast to the MyReceiver, which
+ * creates a MyService intent, which creates a notification based on which
+ * button was pressed and the current number of eggs.
+ */
 public class MainActivity extends AppCompatActivity {
     public static SharedPreferences pref;
+
+    /*
+     * onCreate creates the layout of the app, as well as creating the SharedPreferences
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,44 +32,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-     * Whenever eggs are added, the service must post
-     * a notification to the notification bar
-     * describing the number of eggs available.
-     * One notification will appear per button click
+     * When the "add 1 egg" button is pressed, add_one_egg method is called.
+     * This creates a MyReceiver intent with a code of 1. MyService.java
+     * deciphers the codes.
      */
     public void add_one_egg(View view) {
-        Intent myIntent = new Intent(getApplicationContext(),MyReceiver.class);
-        sendBroadcast(myIntent.putExtra(getString(R.string.code), 1));
+        Intent myIntent = new Intent(getApplicationContext(), MyReceiver.class);
+        sendBroadcast(myIntent.putExtra("code", 1));
     }
 
     /*
-     * Whenever eggs are added, the service must post
-     * a notification to the notification bar
-     * describing the number of eggs available.
-     * ONe notification will appear per button click
-     */
+   * When the "add 2 egg" button is pressed, add_two_egg method is called.
+   * This creates a MyReceiver intent with a code of 2. MyService.java
+   * deciphers the codes.
+   */
     public void add_two_egg(View view) {
-        Intent myIntent = new Intent(getApplicationContext(),MyReceiver.class);
-        sendBroadcast(myIntent.putExtra(getString(R.string.code), 2));
+        Intent myIntent = new Intent(getApplicationContext(), MyReceiver.class);
+        sendBroadcast(myIntent.putExtra("code", 2));
     }
-/*
- * subtract 1 egg from the current_egg_count.
- * the number of eggs cannot go negative
- */
+
+    /*
+     * When the "subtract 1 egg" button is pressed, subtract_one_egg method is called.
+     * This creates a MyReceiver intent with a code of -1. MyService.java
+     * deciphers the codes.
+     */
     public void subtract_one_egg(View view) {
-            Intent myIntent = new Intent(getApplicationContext(),MyReceiver.class);
-            sendBroadcast(myIntent.putExtra(getString(R.string.code), -1));
+        Intent myIntent = new Intent(getApplicationContext(), MyReceiver.class);
+        sendBroadcast(myIntent.putExtra("code", -1));
     }
-/*
- * If 6 or more eggs available, it will subtract 6 from the total,
- * store the new total and post a notification with
- * verbiage similar to "We are having omelets, we have x eggs available."
- * Where x is the number of eggs available after 6 are subtracted.
- * If less than 6, it will post a notification with verbiage similar to
- * "We are having gruel, we have x eggs available."
- */
+
+    /*
+     * When the "Make Breakfast" button is pressed, make_breakfast method is called.
+     * This creates a MyReceiver intent with a code of 9999. MyService.java
+     * deciphers the codes.
+     */
     public void make_breakfast(View view) {
-            Intent myIntent = new Intent(getApplicationContext(),MyReceiver.class);
-            sendBroadcast(myIntent.putExtra(getString(R.string.code), Constants.MAKE_BREAKFAST));
+        Intent myIntent = new Intent(getApplicationContext(), MyReceiver.class);
+        sendBroadcast(myIntent.putExtra("code", Constants.MAKE_BREAKFAST));
     }
 }
